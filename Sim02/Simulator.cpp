@@ -16,7 +16,11 @@
 
 void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
 {
-	//First copy the intQueue
+	//Variables
+   const string BEGIN = "begin";
+   const string FINISH = "finish";
+   
+   //First copy the intQueue
    copyMetaQueue ( myMeta );
    setMemory ( myMeta, myConfig );
    //Now I can use this to create processTimes
@@ -44,17 +48,27 @@ void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
 
       switch ( code )
       {
+
       case 'S':
-         if ( key == "begin" )
+         if ( key == BEGIN )
          {
             cout << now.count ( ) << " - Simulator program starting\n";
          }
-         else if ( key == "end" )
+         else if ( key == FINISH )
          {
             cout << now.count ( ) << " - Simulator program ending\n";
          }
          break;
+
       case 'A':
+         if ( key == BEGIN )
+         {
+
+         }
+         else if ( key == FINISH )
+         {
+
+         }
          break;
       case 'P':
          break;
@@ -63,7 +77,10 @@ void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
       case 'O':
          break;
       case 'M':
-         getMemory ( );
+         cout << now.count ( ) << " - allocating memory\n";
+         RNG ( );
+         cout << now.count ( ) << " - memory allocated at " 
+            << "0x" << hex << address << "\n";
          break;
       default:
          cout << "Error with the switch codes...\n";
@@ -79,6 +96,23 @@ void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
          cout << "ProcessTime: " << processTime << "\n";
       }
    }
+}
+
+void Simulator::RNG ( )
+{
+   int num;
+   srand ( time ( NULL ) );
+   num = rand ( );
+   address = num;
+}
+
+
+void Simulator::setMemory ( MetaData &myMeta , ConfigData myConfig )
+{
+   string temp;
+   it = myConfig.configMap.find ( "system" );
+   temp = it->second;
+   memory = stoi ( temp );
 }
 
 void Simulator::copyMetaQueue ( MetaData myMeta )
@@ -108,7 +142,6 @@ void Simulator::setMetaKey ( MetaData &myMeta )
 void Simulator::setConfigTime ( MetaData &myMeta , ConfigData myConfig )
 {
 	string temp , temp2;
-   map<string, string>::iterator it;
 
    if ( key == "begin" )
       return;

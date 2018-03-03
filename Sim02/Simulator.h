@@ -20,6 +20,7 @@
 #include "MetaData.h"
 #include <ctime>
 #include <chrono>
+#include <iomanip>
 
 
 class Simulator
@@ -27,14 +28,21 @@ class Simulator
 public:
 	//Variables
 	char		code;
+
 	string	key;
+
    int		configTime ,
             metaTime ,
-            processTime;
-   queue<int> tempQueue;
-   
+            processTime ,
+            memory ,
+            address ,
+            count;
 
-	double process;
+   double process;
+
+   queue<int> tempQueue;
+   map<string , string>::iterator it;
+   
 
 	//Methods
 	void runSim ( MetaData , ConfigData );
@@ -43,6 +51,7 @@ public:
 	void setMetaKey ( MetaData& );
 	void setConfigTime ( MetaData& , ConfigData );
    void setMemory ( MetaData& , ConfigData );
+   void RNG ( );
 
 };
 #endif
