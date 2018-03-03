@@ -60,7 +60,32 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AdditionalSourcesToCopyMapping>makefile;$(AdditionalSourcesToCopyMapping)</AdditionalSourcesToCopyMapping>
+  </PropertyGroup>
   <ItemGroup>
+    <Text Include="makefile">
+      <RemoteCopyFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</RemoteCopyFile>
+      <RemoteCopyToOutputDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</RemoteCopyToOutputDir>
+      <RemoteFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">makefile</RemoteFile>
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Makefile</FileType>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ConfigData.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MetaData.cpp" />
+    <ClCompile Include="Simulator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConfigData.h" />
+    <ClInclude Include="MetaData.h" />
+    <ClInclude Include="Simulator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config_1.conf" />
+    <None Include="Test_1a.mdf" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
