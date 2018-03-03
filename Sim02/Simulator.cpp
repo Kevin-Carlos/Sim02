@@ -12,28 +12,27 @@
 #include "Simulator.h"
 #include <iostream>
 
-#define DEBUG 0
+#define DEBUG 1
 
 void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
 {
 	//First copy the intQueue
    copyMetaQueue ( myMeta );
+   setMemory ( myMeta, myConfig );
    //Now I can use this to create processTimes
 
    //Start time
    chrono::high_resolution_clock::time_point beginTime = 
       chrono::high_resolution_clock::now ( );
 
-   //while ( !tempQueue.empty ( ) )
-   //{
+   while ( !tempQueue.empty ( ) )
+   {
       //Grab the code, the key, configTime
-      setMetaCode ( &myMeta );
-      setMetaKey ( &myMeta );
-      setConfigTime ( &myMeta , myConfig );
+      setMetaCode ( myMeta );
+      setMetaKey ( myMeta );
+      setConfigTime ( myMeta , myConfig );
       metaTime = tempQueue.front ( );
-
-      //Pop the queues
-
+      tempQueue.pop ( );
 
       chrono::high_resolution_clock::time_point tempTime =
          chrono::high_resolution_clock::now ( );
@@ -64,6 +63,7 @@ void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
       case 'O':
          break;
       case 'M':
+         getMemory ( );
          break;
       default:
          cout << "Error with the switch codes...\n";
@@ -78,7 +78,7 @@ void Simulator::runSim ( MetaData myMeta , ConfigData myConfig )
          cout << "MetaTime: " << metaTime << "\n";
          cout << "ProcessTime: " << processTime << "\n";
       }
-   //}
+   }
 }
 
 void Simulator::copyMetaQueue ( MetaData myMeta )
@@ -123,7 +123,6 @@ void Simulator::setConfigTime ( MetaData &myMeta , ConfigData myConfig )
 
    it = myConfig.configMap.find ( temp );
    temp2 = it->second;
-   cout << "Temp2: " << temp2 << "\n";
    configTime = stoi ( temp2 );
 
 }

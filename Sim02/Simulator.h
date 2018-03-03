@@ -42,5 +42,7 @@ public:
 	void setMetaCode ( MetaData& );
 	void setMetaKey ( MetaData& );
 	void setConfigTime ( MetaData& , ConfigData );
+   void setMemory ( MetaData& , ConfigData );
+
 };
 #endif
