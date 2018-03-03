@@ -20,12 +20,14 @@
 //
 #include "ConfigData.h"
 #include "MetaData.h"
+#include "Simulator.h"
 
 int main ( int argc , char *argv [ ] )
 {
    //Class Object declarations
    ConfigData myConfig;
    MetaData myMeta;
+   Simulator sim;
 
    //Variables
 
@@ -34,5 +36,11 @@ int main ( int argc , char *argv [ ] )
 
    //Read in metaData file
    myMeta.metaFileReadIn ( myConfig.getMetaFile ( ) );
+
+   //Need to pass give Simulator both my configMap and the queues in meta
+   //sim.getMetaData ( myMeta );
+   sim.runSim ( myMeta , myConfig );
+
+
 
 }
