@@ -31,11 +31,12 @@ void MetaData::metaFileReadIn ( string fileName )
                temp2;
 
    int         index1 ,
-               index2;
+               index2 ,
+               endCond = 0;
 
    size_t      pos;
 
-   const string END = "S{finish}0.";
+   const string END = "End";
    const string BEGIN = "begin";
    const string HARD = "hard";
 
@@ -60,8 +61,8 @@ void MetaData::metaFileReadIn ( string fileName )
       fin >> data;
       
       //If end of file has been reached
-      if ( data == END )
-         break;
+      /*if ( data == END )
+         break;*/
 
       //Special case :: hard drive
       pos = data.find ( HARD );
@@ -70,21 +71,33 @@ void MetaData::metaFileReadIn ( string fileName )
          fin >> temp;
          temp2 = data + ' ' + temp;
          data = temp2;
+         code = data [ 0 ];
       }
       else
          //Take the code
          code = data [ 0 ];
 
       //Get the key with the indices
-	 //Set indices
-	 index1 = data.find ( '{' );
-	 index2 = data.find ( '}' );
+	   //Set indices
+      index1 = data.find ( '{' );
+	   index2 = data.find ( '}' );
       key = data.substr ( index1 + 1 , index2 - 2 );
 
       //Time
       index1 = data.find ( ';' );
       temp = data.substr ( ( index2 + 1 ) , ( index1 - 1 ) );
-      cycleTime = stoi ( temp );
+
+      //If time = .
+      if ( temp == END )
+         endCond = 1;
+
+      if ( endCond == 1 )
+         cycleTime = 0;
+      else
+         cycleTime = stoi ( temp );
+
+      if ( endCond == 1 )
+         break;
 
       //Store data to use
       charQueue.push ( code );

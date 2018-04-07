@@ -1,5 +1,5 @@
 # target executable name
-TARGET = Sim02
+TARGET = Sim03
 
 # Compiler
 CC=g++
@@ -8,10 +8,10 @@ CC=g++
 CXXFLAGS = -pthread -g -Wall -std=c++11
 
 # Source files
-SOURCES = ConfigData.cpp main.cpp MetaData.cpp Simulator.cpp
+SOURCES = ConfigData.cpp main.cpp MetaData.cpp Simulator.cpp Timer.cpp PCB.cpp Logger.cpp
 
 # header file dependencies
-HEADERS = ConfigData.h MetaData.h Simulator.h
+HEADERS = ConfigData.h MetaData.h Simulator.h Timer.h PCB.h Logger.h
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)

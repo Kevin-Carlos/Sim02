@@ -16,42 +16,59 @@
 //
 // Libraries
 //
-#include <pthread.h>
 #include "MetaData.h"
+#include "Logger.h"
+#include "PCB.h"
 #include <ctime>
 #include <chrono>
-#include <iomanip>
+
+
+//
+// Preprocessor directives
+//
 
 
 class Simulator
 {
 public:
 	//Variables
-	char		code;
+   /*struct Data {
+      char     code;
 
-	string	key;
+      string   key;
 
-   int		configTime ,
-            metaTime ,
-            processTime ,
-            memory ,
+      int      configTime ,
+               metaTime ,
+               processTime;
+   };*/
+
+   //Object declarations
+   PCB PCBobj;
+   Logger log;
+
+   int		maxMemory ,
+            blockSize ,
             address ,
-            count;
+            HDDQuantity = 0 ,
+            HDDMax ,
+            projMax ,
+            projQuantity = 0 ,
+            count = 0;
 
-   double process;
+   std::string processType;
 
-   queue<int> tempQueue;
+   std::string stream;
+
    map<string , string>::iterator it;
    
 
 	//Methods
-	void runSim ( MetaData , ConfigData );
-   void copyMetaQueue ( MetaData );
-	void setMetaCode ( MetaData& );
-	void setMetaKey ( MetaData& );
-	void setConfigTime ( MetaData& , ConfigData );
-   void setMemory ( MetaData& , ConfigData );
-   void RNG ( );
-
+	void runSim ( MetaData& , ConfigData& );
+   void setData ( MetaData& , ConfigData& );
+   void setMemoryBlockSize ( MetaData& , ConfigData );
+   void setMaxMemory ( MetaData& , ConfigData );
+   void setQuantities ( MetaData& , ConfigData );
+   void getFileAndMethod ( MetaData& , ConfigData );
+   bool getAddress ( int );
 };
 #endif

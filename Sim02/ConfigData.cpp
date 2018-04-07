@@ -25,11 +25,13 @@ void ConfigData::fileReadIn ( string configFileName )
 {
    //Declare variables
    ifstream    fin;
-   int         count = 0;
    string      temp ,
                data ,
                keyString ,
                keyVal;
+   int         count = 0 ,
+               HDDcount = 0 ,
+               printCount = 0;
 
    //Open the file
    fin.open ( configFileName );
@@ -66,6 +68,37 @@ void ConfigData::fileReadIn ( string configFileName )
          keyVal.begin ( ) ,
          ::tolower );
 
+      //Special case for memory block size
+      if ( keyVal == "memory" )
+      {
+         //Need to read the next word
+         keyVal =
+            keyString.substr (
+               keyString.find ( ' ' ) ,
+               keyString.find ( ' ' ) );
+
+         if ( keyVal == " block" )
+            keyVal = "block";
+         else
+            keyVal = "memory";
+      }
+
+      if ( keyVal == "projector" )
+      {
+         keyVal = "projector";
+         if ( printCount == 1 )
+            keyVal = "projector quantity";
+         printCount++;
+      }
+
+      if ( keyVal == "hard" )
+      {
+         keyVal = "hard drive";
+         if ( HDDcount == 1 )
+            keyVal = "hard drive quantity";
+         HDDcount++;
+      }
+
       //Special case for log file path
       it = configMap.find ( "log" );
       if ( it == configMap.end ( ) )
@@ -75,9 +108,9 @@ void ConfigData::fileReadIn ( string configFileName )
       else
          keyVal = "path";
 
-	 //Debug
-	 //cout << "Key: " << keyVal << "\n";
-	 //cout << "Data: " << data << "\n";
+      //Debug
+      //cout << "Key: " << keyVal << "\n";
+      //cout << "Data: " << data << "\n";
 
       //Insert into map
       configMap.insert ( pair<string , string> ( keyVal , data ) );
@@ -95,7 +128,6 @@ void ConfigData::fileReadIn ( string configFileName )
 
    //Close the file
    fin.close ( );
-
 }
 
 string ConfigData::getMetaFile ( )

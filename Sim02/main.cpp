@@ -8,7 +8,7 @@
   *      
   * Version 1.01 Editing for Project2
   *
-  * Collabs: Brian M., Nathan T.
+  * Collaborators: Brian M., Nathan T.
   *         
   *
   * Notes: argv[1] should be the name of the config file, which will be passed
